@@ -18,7 +18,7 @@ app.get("/interests", (req, res) => {
 
 // WillAnhHitTheCorner page
 app.get("/willanhhitthecorner", (req, res) => {
-  res.sendFile(path.join(__dirname, "underconstruction.html"));
+  res.sendFile(path.join(__dirname, "willanhhitthecorner.html"));
 });
 
 const PORT = process.env.PORT || 3000;

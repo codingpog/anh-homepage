@@ -39,23 +39,32 @@
           >
         </div>
       </nav>
-      <div class="construction">
-        <p>This page is</p>
+
+      <a
+        href="https://www.pokemon.com/us/pokedex/dragonite"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <picture>
           <source
-            srcset="/images/consbar.gif"
+            srcset="/images/dragonite.webp"
             media="(prefers-reduced-motion: no-preference)"
           />
-          <img src="/images/consbar.png" alt="under-construction" />
+          <img src="/images/dragonite.png" alt="Dragonite" />
         </picture>
-        <picture>
-          <source
-            srcset="/images/flames.gif"
-            media="(prefers-reduced-motion: no-preference)"
-          />
-          <img src="/images/flames.png" alt="flames" />
-        </picture>
-      </div>
+      </a>
+
+      <article class="content">
+        <div class="top">
+          <a
+            class="dot"
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1"
+            target="_blank"
+            rel="noopener noreferrer"
+          ></a>
+        </div>
+        <div class="canvas" id="canvas"></div>
+      </article>
     </main>
     <footer class="footer">
       <div class="footer-content">
@@ -100,6 +109,7 @@
         </nav>
       </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
     <script src="/js/app.js"></script>
   </body>
 </html>
