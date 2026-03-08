@@ -165,6 +165,28 @@ header {
   }
 }
 
+/*
+Source - https://stackoverflow.com/a/16344389
+Posted by Mr. Alien, modified by community. See post 'Timeline' for change history
+Retrieved 2026-03-07, License - CC BY-SA 4.0
+*/
+
+.fade-in {
+  animation: fade 3s linear infinite;
+  color: #4af626;
+}
+
+@keyframes fade {
+  50% {
+    opacity: 0;
+  }
+}
+
+.grayed-out {
+  color: #4af626;
+  opacity: 0.5;
+}
+
 .construction {
   display: flex;
   flex-direction: column;
@@ -177,6 +199,12 @@ header {
   height: 100vh;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
+}
+
+.current-game {
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }
 
 .footer {

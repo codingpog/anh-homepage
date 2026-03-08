@@ -85,3 +85,73 @@ function closeWindow() {
     x.style.display = "none";
   }
 }
+
+// get Steam data once the interests page is loaded
+async function getSteamData() {
+  try {
+    const response1 = await fetch("/steam/getOwnedGames");
+    const data1 = await response1.json();
+    const response2 = await fetch("/steam/playerInfo");
+    const data2 = await response2.json();
+    let userData = {
+      game_count: data1.response.game_count,
+      games: data1.response.games,
+      player: data2,
+    };
+    return userData;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+async function runner() {
+  try {
+    let steamData = await getSteamData();
+    setInterval(async () => {
+      steamData = await getSteamData();
+      // console.log(steamData);
+      setCurrentPlayedGame(steamData);
+      setMostPlayedGames(steamData);
+    }, 5000);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+function setCurrentPlayedGame(steamData) {
+  document.getElementById("current-game-name").textContent =
+    steamData.player.gameextrainfo;
+  let currentGame = steamData.games.find((game) => {
+    return game.appid === parseInt(steamData.player.gameid);
+  });
+  if (currentGame) {
+    document.getElementById("playing-status").classList.remove("grayed-out");
+    document.getElementById("playing-status").classList.add("fade-in");
+    document.getElementById("playing-status").textContent = "PLAYING";
+    document.getElementById("current-game-logo").src =
+      `http://media.steampowered.com/steamcommunity/public/images/apps/${currentGame.appid}/${currentGame.img_icon_url}.jpg`;
+  } else {
+    document.getElementById("current-game-logo").src = "";
+    document.getElementById("playing-status").classList.add("grayed-out");
+    document.getElementById("playing-status").classList.remove("fade-in");
+    document.getElementById("playing-status").textContent = "OFFLINE";
+  }
+}
+
+function setMostPlayedGames(steamData) {
+  let ownedGames = steamData.games;
+  ownedGames.sort((a, b) => a.playtime_forever - b.playtime_forever); //https://www.w3schools.com/js/js_array_sort.asp#:~:text=Try%20it%20Yourself%20%C2%BB-,The%20Compare%20Function,-The%20purpose%20of
+  let mostPlayedGames = ownedGames.slice(-3);
+  mostPlayedGames.reverse();
+  let ranks = ["first-game", "second-game", "third-game"];
+  for (let i = 0; i < mostPlayedGames.length; i++) {
+    let rankName = ranks[i] + "-name";
+    let rankLogo = ranks[i] + "-logo";
+    let rankHours = ranks[i] + "-hours";
+    document.getElementById(rankName).textContent = mostPlayedGames[i].name;
+    document.getElementById(rankLogo).src =
+      `http://media.steampowered.com/steamcommunity/public/images/apps/${mostPlayedGames[i].appid}/${mostPlayedGames[i].img_icon_url}.jpg`;
+    document.getElementById(rankHours).textContent =
+      `${Math.trunc(mostPlayedGames[i].playtime_forever / 60)} hours`;
+  }
+}
